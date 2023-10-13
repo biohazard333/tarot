@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tu Proyecto Tarot</title>
+    <title>App en IA +GPT3 Tarot</title>
 </head>
 <body>
     <h1>Mi Proyecto Tarot</h1>
