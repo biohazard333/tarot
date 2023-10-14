@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>App en IA +GPT3 Tarot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectura de Cartas de Tarot</title>
 </head>
 <body>
-    <h1>Mi Proyecto Tarot</h1>
-    <button id="run-script">Ejecutar Python</button>
-    <script src="script.js"></script>
+    <h1>Lectura de Cartas de Tarot</h1>
+    <form action="/">
+        <label for="pregunta">Escribe tu Pregunta:</label>
+        <input type="text" id="pregunta" name="pregunta" value="">
+        <input type="submit" value="Tirar Cartas de Tarot">
+    </form>
 </body>
 </html>
