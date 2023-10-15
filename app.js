@@ -84,26 +84,11 @@ app.post('/resultado', (req, res) => {
             generate_video(audio_path, face_image_path, video_path);
 
             Promise.all(images).then(() => {
-                res.send(`
-                    Salida de 4 cartas aleatorias: ${cartas.join(', ')}
-                    <br>
-                    <img src="temp/${cartas[0]}.png" alt="${cartas[0]}">
-                    <img src="temp/${cartas[1]}.png" alt="${cartas[1]}">
-                    <img src="temp/${cartas[2]}.png" alt="${cartas[2]}">
-                    <img src="temp/${cartas[3]}.png" alt="${cartas[3]}">
-                    <br>
-                    Interpretación del GPT-3: ${gpt3_output}
-                    <br>
-                    <video width="320" height="240" controls>
-                        <source src="${video_path}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                `);
+                res.sendFile('templates/results.html', { root: __dirname });
             });
         }
     });
 });
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
