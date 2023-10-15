@@ -97,12 +97,12 @@ def index():
             generate_audio(gpt_output, audio_path)
             return_code = generate_video(audio_path, face_image_path, video_path)
             if return_code == 0 and os.path.isfile(video_path):
-                return render_template('index.html', cartas=cartas, gpt_output=gpt_output, video_path=video_path)
+                return redirect('https://biohazard333.github.io/tarot', cartas=cartas, gpt_output=gpt_output, video_path=video_path)
             else:
                 return "No se pudo generar el video."
         else:
             return "Error al generar las cartas y la interpretación."
-    return render_template('index.html')
+    return redirect('https://biohazard333.github.io/tarot')
 
 if __name__ == '__main__':
     app.run(debug=True)
