@@ -84,7 +84,7 @@ app.post('/resultado', (req, res) => {
             generate_video(audio_path, face_image_path, video_path);
 
             Promise.all(images).then(() => {
-                res.sendFile('templates/results.html', { root: __dirname });
+                res.sendFile('${current_dir}/templates/results.html', { root: __dirname });
             });
         }
     });
