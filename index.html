@@ -1,28 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tirada de Tarot</title>
+    <title>Tirada de Tarot</title>
 </head>
 <body>
-  <script>
-    // Cargar el script de manera asíncrona
-    var script = document.createElement('script');
-    script.src = 'app.js';
-    script.onload = function() {
-      console.log('Script cargado correctamente.');
-      try {
-        // Ejecutar la función principal de app.js
-        iniciarApp();
-      } catch (error) {
-        console.error('Error al ejecutar el script:', error);
-      }
-    };
-    script.onerror = function() {
-      console.error('Error al cargar el script.');
-    };
-    document.body.appendChild(script);
-  </script>
+    <h1>Tirada de Tarot</h1>
+    <form action="/resultado" method="post">
+        <label for="pregunta">Haz tu pregunta:</label>
+        <input type="text" id="pregunta" name="pregunta">
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 </html>
