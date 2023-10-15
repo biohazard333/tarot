@@ -50,12 +50,12 @@ if not os.path.exists(checkpoint_path):
 st.title("Tirada de Tarot")
 
 # Sección de pregunta
-name = st.text_input("1. Haz tu pregunta:")
+name = st.text_input("Haz tu pregunta:")
 
 # Sección de salida de cartas
 if name:
     cartas = seleccionar_cartas_tarot(4)
-    st.write(f"2. Salida de 4 cartas aleatorias: {', '.join(cartas)}")
+    st.write(f"Salida de 4 cartas aleatorias: {', '.join(cartas)}")
 
     # Mostrar imágenes de las cartas
     st.subheader("Imágenes de las cartas:")
