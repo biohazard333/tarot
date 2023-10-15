@@ -22,5 +22,11 @@
             Your browser does not support the video tag.
         </video>
     {% endif %}
+
+    <script>
+      fetch('/').then(response => {
+        console.log('La aplicación Flask se ha iniciado automáticamente.');
+      });
+    </script>
 </body>
 </html>
