@@ -1,0 +1,21 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # Procesar el formulario aquí
+        # Puedes acceder a los datos del formulario con request.form
+
+        # Ejemplo:
+        pregunta = request.form['pregunta']
+        # Aquí puedes hacer lo que necesites con la pregunta
+
+        # Luego, renderiza el template con los resultados
+        return render_template('index.html', cartas="Resultado", gpt_output="Salida de GPT-3", video_path="ruta_al_video")
+
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
