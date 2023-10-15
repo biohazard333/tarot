@@ -1,12 +1,14 @@
+from flask import Flask, render_template, request
 import os
 import openai
 import random
 from gtts import gTTS 
-import streamlit as st
 import subprocess
 import requests
 
-openai.api_key = "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"
+app = Flask(__name__)
+
+openai.api_key = "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"
 
 cartas_tarot = [
     "amantes", "carroza", "colgado", "diablo", "emperador",
@@ -24,7 +26,7 @@ def generate_audio(text, output_path):
     tts.save(output_path)
 
 def generate_video(audio_path, face_image_path, video_path):
-    command = f"python3 inference.py --checkpoint_path checkpoints/wav2lip_gan.pth --face face.jpg --audio temp/temp.wav --outfile video.mp4stream --nosmooth"
+    command = f"python3 inference.py --checkpoint_path checkpoints/wav2lip_gan.pth --face face.jpg --audio {audio_path} --outfile {video_path} --nosmooth"
     process = subprocess.run(command, shell=True, text=True)
     return process.returncode
 
@@ -45,16 +47,26 @@ if not os.path.exists(checkpoint_path):
 # Crear la carpeta 'temp' si no existe
 os.makedirs('temp', exist_ok=True)
 
+from flask import Flask, render_template, request
+import os
+import openai
+import random
+from gtts import gTTS 
+import subprocess
+import requests
+
+app = Flask(__name__)
+
+# Resto de tu código...
+
 def generate_output(name):
     if not name:
         return None, "El campo de nombre es obligatorio."
 
     cartas_seleccionadas = seleccionar_cartas_tarot(4)
-    
-    st.image([f"{carta}.png" for carta in cartas_seleccionadas], caption=cartas_seleccionadas, width=100)
-    
+
     prompt = f"Interpretando las cartas sobre la pregunta sobre tu lectura es: {', '.join(cartas_seleccionadas)}."
-    
+
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
@@ -64,41 +76,33 @@ def generate_output(name):
         stop=None,
     )
     gpt3_output = response.choices[0].text.strip()
-    
+
     if len(response.choices) == 0 or 'text' not in response.choices[0]:
         return None, "No se pudo generar el texto."
 
     return cartas_seleccionadas, gpt3_output
 
-name = st.text_input("Escribe tu Pregunta", value="")
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        name = request.form['pregunta']
+        cartas, gpt_output = generate_output(name)
+        if cartas and gpt_output:
+            audio_path = "temp/temp.wav"
+            video_dir = "videos/"
+            os.makedirs(video_dir, exist_ok=True)
+            video_path = f"{video_dir}video.mp4"
+            face_image_path = "face.jpg"
 
-if st.button("Tirar Cartas de Tarot"):
-    cartas, gpt_output = generate_output(name)
-    if cartas and gpt_output:
-        st.success("Cartas tiradas exitosamente.")
-        st.write(f"Cartas seleccionadas: {', '.join(cartas)}")
-        st.write(f"Interpretación de GPT-3: {gpt_output}")
-        st.write("Generando video...")
-
-        # Directorio donde se guardará el video
-        video_dir = "videos/"
-        os.makedirs(video_dir, exist_ok=True)
-
-        # Rutas de los archivos
-        audio_path = "temp/temp.wav"  # Cambiado el nombre del archivo de audio
-        video_path = f"{video_dir}video.mp4"
-        face_image_path = "face.jpg"
-        
-        # Aquí es donde generas el audio, por ejemplo:
-        generate_audio(gpt_output, audio_path)
-
-        # Luego, genera el video usando el código que proporcionaste
-        return_code = generate_video(audio_path, face_image_path, video_path)
-        if return_code != 0:
-            st.error(f"No se pudo generar el video.")
-        elif os.path.isfile(video_path):
-            st.video(video_path)
+            generate_audio(gpt_output, audio_path)
+            return_code = generate_video(audio_path, face_image_path, video_path)
+            if return_code == 0 and os.path.isfile(video_path):
+                return render_template('index.html', cartas=cartas, gpt_output=gpt_output, video_path=video_path)
+            else:
+                return "No se pudo generar el video."
         else:
-            st.error("No se pudo generar el video.")
-    else:
-        st.error("Error al generar las cartas y la interpretación.")
+            return "Error al generar las cartas y la interpretación."
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

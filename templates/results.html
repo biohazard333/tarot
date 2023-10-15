@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de la Lectura de Cartas de Tarot</title>
+</head>
+<body>
+    <h1>Resultado de la Lectura de Cartas de Tarot</h1>
+    <p>Cartas seleccionadas: {{ cartas }}</p>
+    <p>Interpretación de GPT-3: {{ gpt_output }}</p>
+    <video width="320" height="240" controls>
+        <source src="{{ video_path }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</body>
+</html>
