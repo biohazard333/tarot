@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +7,37 @@
 </head>
 <body>
     <h1>Resultados de la Tirada de Tarot</h1>
-    
-    <h2>Cartas Seleccionadas</h2>
-    <ul>
-        <li>Carta 1: [Nombre de la Carta]</li>
-        <li>Carta 2: [Nombre de la Carta]</li>
-        <!-- Agrega los nombres de las cartas seleccionadas -->
-    </ul>
-    
-    <h2>Imágenes de las Cartas</h2>
-    <img src="temp/carta1.png" alt="Carta 1">
-    <img src="temp/carta2.png" alt="Carta 2">
-    <!-- Agrega las imágenes correspondientes -->
 
-    <h2>Interpretación de GPT-3</h2>
-    <p>[Texto de la Interpretación]</p>
-    <!-- Agrega el texto de la interpretación de GPT-3 -->
+    <div id="resultados">
+        <h2>Cartas Seleccionadas:</h2>
+        <ul id="cartas"></ul>
 
-    <h2>Video Generado por Wav2Lip</h2>
-    <video width="320" height="240" controls>
-        <source src="videos/video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+        <h2>Interpretación del GPT-3:</h2>
+        <p id="interpretacion"></p>
+
+        <h2>Video generado por Wav2Lip:</h2>
+        <video id="video" controls></video>
+    </div>
+
+    <script>
+        const resultados = JSON.parse(localStorage.getItem('resultados'));
+
+        const cartasElement = document.getElementById('cartas');
+        const interpretacionElement = document.getElementById('interpretacion');
+        const videoElement = document.getElementById('video');
+
+        resultados.cartas.forEach(carta => {
+            const li = document.createElement('li');
+            li.textContent = carta;
+            cartasElement.appendChild(li);
+        });
+
+        interpretacionElement.textContent = resultados.interpretacion;
+
+        const source = document.createElement('source');
+        source.src = resultados.videoPath;
+        source.type = 'video/mp4';
+        videoElement.appendChild(source);
+    </script>
 </body>
 </html>
