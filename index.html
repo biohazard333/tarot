@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>WebView de mi aplicación Flask</title>
-    <script>
-        function cargarPagina() {
-            var webView = document.getElementById("webView");
-            webView.src = "https://biohazard333.github.io/tarot/";
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView App</title>
 </head>
-<body onload="cargarPagina()">
-    <iframe id="webView" width="100%" height="100%"></iframe>
+<body>
+    <iframe id="appFrame" width="100%" height="600" frameborder="0"></iframe>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var iframe = document.getElementById('appFrame');
+            iframe.src = 'app.py';  // Cambia esto si el nombre del archivo es diferente
+
+            // Escucha eventos de carga de iframe
+            iframe.addEventListener('load', function() {
+                // Puedes realizar acciones después de cargar el iframe aquí
+            });
+        });
+    </script>
 </body>
 </html>
